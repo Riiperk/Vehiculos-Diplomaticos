@@ -112,15 +112,21 @@ class UsuarioService(
         }.toMutableSet()
 
         // La contraseña se transforma antes de guardarse.
-        val usuario = Usuario(
-            nombre = request.nombre.trim(),
-            apellido = request.apellido.trim(),
-            correo = correoNormalizado,
-            passwordHash = passwordEncoder.encode(request.password),
-            telefono = request.telefono?.trim()?.takeIf { it.isNotEmpty() },
-            activo = true,
-            roles = rolesEncontrados
-        )
+val usuario = Usuario(
+    nombre = request.nombre.trim(),
+    apellido = request.apellido.trim(),
+    correo = correoNormalizado,
+    passwordHash = requireNotNull(
+        passwordEncoder.encode(request.password)
+    ) {
+        "No fue posible proteger la contraseña"
+    },
+    telefono = request.telefono
+        ?.trim()
+        ?.takeIf { it.isNotEmpty() },
+    activo = true,
+    roles = rolesEncontrados
+)
 
         return convertirARespuesta(usuarioRepository.save(usuario))
     }
