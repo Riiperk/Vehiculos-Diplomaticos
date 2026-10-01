@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Diplomatic Fleet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<section id="login" class="login-page">
+  <div class="login-visual">
+    <div class="brand-mark">DF</div>
+    <p class="eyebrow">MOVILIDAD DIPLOMÁTICA E INSTITUCIONAL</p>
+    <h1>Diplomatic Fleet</h1>
+    <p>Gestión de alquileres y servicios vehiculares para embajadas, consulados y organismos internacionales.</p>
+  </div>
+  <form id="loginForm" class="login-card">
+    <h2>Acceso al sistema</h2>
+    <p class="muted">Demo académica. Usa cualquier correo válido y una contraseña de 8 caracteres.</p>
+    <label>Correo institucional<input id="loginEmail" type="email" value="admin@diplomaticfleet.co" required></label>
+    <label>Contraseña<input id="loginPassword" type="password" value="Demo1234" minlength="8" required></label>
+    <button class="primary" type="submit">Iniciar sesión</button>
+    <p id="loginError" class="error"></p>
+  </form>
+</section>
+
+<div id="app" class="app hidden">
+  <aside>
+    <div class="sidebar-brand"><span>DF</span><div><strong>Diplomatic Fleet</strong><small>Gestión institucional</small></div></div>
+    <nav id="nav">
+      <button data-view="inicio" class="active">Inicio</button>
+      <button data-view="clientes">Clientes institucionales</button>
+      <button data-view="vehiculos">Vehículos</button>
+      <button data-view="documentos">Documentos</button>
+      <button data-view="mantenimientos">Mantenimientos</button>
+      <button data-view="disponibilidad">Disponibilidad</button>
+      <button data-view="solicitudes">Solicitudes</button>
+      <button data-view="conductores">Validación de conductor</button>
+      <button data-view="cotizaciones">Cotizaciones</button>
+      <button data-view="usuarios">Usuarios y roles</button>
+    </nav>
+    <button id="logout" class="logout">Cerrar sesión</button>
+  </aside>
+  <main>
+    <header><div><p class="eyebrow">DEMO US01 A US10</p><h2 id="pageTitle">Resumen operativo</h2></div><div class="user-chip">Administrador del sistema</div></header>
+    <div id="notice" class="notice hidden"></div>
+
+    <section id="inicio" class="view active-view">
+      <div class="cards" id="summaryCards"></div>
+      <div class="panel"><h3>Flujo demostrable</h3><div class="flow"><span>Cliente</span><b>→</b><span>Vehículo disponible</span><b>→</b><span>Solicitud</span><b>→</b><span>Validación</span><b>→</b><span>Cotización</span></div></div>
+      <div class="panel"><h3>Alcance de esta versión</h3><p>La demo permite registrar y visualizar datos locales de US01 a US10. Los datos permanecen en este navegador mediante almacenamiento local. La conexión definitiva con Kotlin, Spring Boot y PostgreSQL se realizará sobre esta misma estructura funcional.</p></div>
+    </section>
+
+    <section id="clientes" class="view"><div class="section-head"><div><h3>Clientes institucionales</h3><p>Embajadas, consulados y organismos internacionales.</p></div><button class="primary" data-open="clienteModal">Registrar cliente</button></div><div class="panel table-wrap"><table><thead><tr><th>Entidad</th><th>Tipo</th><th>Contacto</th><th>Correo</th><th>Estado</th></tr></thead><tbody id="clientesRows"></tbody></table></div></section>
+    <section id="vehiculos" class="view"><div class="section-head"><div><h3>Vehículos</h3><p>Catálogo administrado por la empresa.</p></div><button class="primary" data-open="vehiculoModal">Registrar vehículo</button></div><div id="vehiculosGrid" class="vehicle-grid"></div></section>
+    <section id="documentos" class="view"><div class="section-head"><div><h3>Documentación vehicular</h3><p>Control de vigencias y alertas.</p></div><button class="primary" data-open="documentoModal">Registrar documento</button></div><div class="panel table-wrap"><table><thead><tr><th>Vehículo</th><th>Documento</th><th>Vencimiento</th><th>Estado</th></tr></thead><tbody id="documentosRows"></tbody></table></div></section>
+    <section id="mantenimientos" class="view"><div class="section-head"><div><h3>Mantenimientos</h3><p>Historial preventivo y correctivo.</p></div><button class="primary" data-open="mantenimientoModal">Programar mantenimiento</button></div><div class="panel table-wrap"><table><thead><tr><th>Vehículo</th><th>Tipo</th><th>Fecha</th><th>Proveedor</th><th>Estado</th></tr></thead><tbody id="mantenimientosRows"></tbody></table></div></section>
+    <section id="disponibilidad" class="view"><div class="panel"><h3>Consultar disponibilidad</h3><form id="disponibilidadForm" class="form-grid"><label>Fecha inicial<input id="dispInicio" type="date" required></label><label>Fecha final<input id="dispFin" type="date" required></label><label>Categoría<select id="dispCategoria"><option value="">Todas</option><option>SEDAN</option><option>SUV</option><option>VAN</option></select></label><label>Pasajeros<input id="dispPasajeros" type="number" min="1" value="2"></label><button class="primary" type="submit">Buscar vehículos</button></form></div><div id="disponiblesGrid" class="vehicle-grid"></div></section>
+    <section id="solicitudes" class="view"><div class="section-head"><div><h3>Solicitudes de servicio</h3><p>Modalidad con o sin conductor.</p></div><button class="primary" data-open="solicitudModal">Nueva solicitud</button></div><div class="panel table-wrap"><table><thead><tr><th>Código</th><th>Cliente</th><th>Modalidad</th><th>Periodo</th><th>Estado</th></tr></thead><tbody id="solicitudesRows"></tbody></table></div></section>
+    <section id="conductores" class="view"><div class="section-head"><div><h3>Validación de conductor autorizado</h3><p>Aplica únicamente a solicitudes sin conductor.</p></div><button class="primary" data-open="conductorModal">Registrar validación</button></div><div class="panel table-wrap"><table><thead><tr><th>Solicitud</th><th>Conductor</th><th>Licencia</th><th>Vencimiento</th><th>Resultado</th></tr></thead><tbody id="conductoresRows"></tbody></table></div></section>
+    <section id="cotizaciones" class="view"><div class="section-head"><div><h3>Cotizaciones</h3><p>Propuesta económica previa a la reserva.</p></div><button class="primary" data-open="cotizacionModal">Crear cotización</button></div><div class="panel table-wrap"><table><thead><tr><th>Código</th><th>Solicitud</th><th>Tarifa base</th><th>Total</th><th>Estado</th></tr></thead><tbody id="cotizacionesRows"></tbody></table></div></section>
+    <section id="usuarios" class="view"><div class="section-head"><div><h3>Usuarios y roles</h3><p>Control de cuentas de la plataforma.</p></div><button class="primary" data-open="usuarioModal">Crear usuario</button></div><div class="panel table-wrap"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th></tr></thead><tbody id="usuariosRows"></tbody></table></div></section>
+  </main>
+</div>
+
+<div id="modalBackdrop" class="modal-backdrop hidden"></div>
+<div id="clienteModal" class="modal hidden"><h3>Registrar cliente institucional</h3><form data-form="clientes" class="form-grid"><label>Entidad<input name="nombre" required></label><label>Tipo<select name="tipo"><option>EMBAJADA</option><option>CONSULADO</option><option>ORGANISMO INTERNACIONAL</option></select></label><label>Contacto<input name="contacto" required></label><label>Correo<input name="correo" type="email" required></label><div class="actions"><button type="button" class="secondary close">Cancelar</button><button class="primary">Guardar</button></div></form></div>
+<div id="vehiculoModal" class="modal hidden"><h3>Registrar vehículo</h3><form data-form="vehiculos" class="form-grid"><label>Placa<input name="placa" required></label><label>Marca<input name="marca" required></label><label>Modelo<input name="modelo" required></label><label>Categoría<select name="categoria"><option>SEDAN</option><option>SUV</option><option>VAN</option></select></label><label>Pasajeros<input name="pasajeros" type="number" min="1" value="4"></label><label>Color<input name="color" value="Negro"></label><div class="actions"><button type="button" class="secondary close">Cancelar</button><button class="primary">Guardar</button></div></form></div>
+<div id="documentoModal" class="modal hidden"><h3>Registrar documento</h3><form data-form="documentos" class="form-grid"><label>Vehículo<select name="vehiculo" class="vehiculo-select"></select></label><label>Tipo<select name="tipo"><option>SOAT</option><option>TECNOMECÁNICA</option><option>SEGURO</option><option>LICENCIA DE TRÁNSITO</option></select></label><label>Vencimiento<input name="vencimiento" type="date" required></label><div class="actions"><button type="button" class="secondary close">Cancelar</button><button class="primary">Guardar</button></div></form></div>
+<div id="mantenimientoModal" class="modal hidden"><h3>Programar mantenimiento</h3><form data-form="mantenimientos" class="form-grid"><label>Vehículo<select name="vehiculo" class="vehiculo-select"></select></label><label>Tipo<select name="tipo"><option>PREVENTIVO</option><option>CORRECTIVO</option></select></label><label>Fecha<input name="fecha" type="date" required></label><label>Proveedor<input name="proveedor" required></label><div class="actions"><button type="button" class="secondary close">Cancelar</button><button class="primary">Guardar</button></div></form></div>
+<div id="solicitudModal" class="modal hidden"><h3>Nueva solicitud</h3><form data-form="solicitudes" class="form-grid"><label>Cliente<select name="cliente" class="cliente-select"></select></label><label>Modalidad<select name="modalidad"><option>CON CONDUCTOR</option><option>SIN CONDUCTOR</option></select></label><label>Fecha inicial<input name="inicio" type="date" required></label><label>Fecha final<input name="fin" type="date" required></label><label>Lugar de recogida<input name="recogida" required></label><label>Lugar de devolución<input name="devolucion" required></label><div class="actions"><button type="button" class="secondary close">Cancelar</button><button class="primary">Guardar</button></div></form></div>
+<div id="conductorModal" class="modal hidden"><h3>Validar conductor autorizado</h3><form data-form="conductores" class="form-grid"><label>Solicitud<select name="solicitud" class="solicitud-select"></select></label><label>Nombre completo<input name="nombre" required></label><label>Licencia<input name="licencia" required></label><label>Vencimiento<input name="vencimiento" type="date" required></label><label>Resultado<select name="resultado"><option>APROBADO</option><option>RECHAZADO</option><option>PENDIENTE</option></select></label><div class="actions"><button type="button" class="secondary close">Cancelar</button><button class="primary">Guardar</button></div></form></div>
+<div id="cotizacionModal" class="modal hidden"><h3>Crear cotización</h3><form data-form="cotizaciones" class="form-grid"><label>Solicitud<select name="solicitud" class="solicitud-select"></select></label><label>Tarifa base<input name="tarifa" type="number" min="0" required></label><label>Extras<input name="extras" type="number" min="0" value="0"></label><label>Impuestos<input name="impuestos" type="number" min="0" value="0"></label><label>Garantía<input name="garantia" type="number" min="0" value="0"></label><div class="actions"><button type="button" class="secondary close">Cancelar</button><button class="primary">Guardar</button></div></form></div>
+<div id="usuarioModal" class="modal hidden"><h3>Crear usuario</h3><form data-form="usuarios" class="form-grid"><label>Nombre completo<input name="nombre" required></label><label>Correo<input name="correo" type="email" required></label><label>Rol<select name="rol"><option>ADMINISTRADOR SISTEMA</option><option>CLIENTE INSTITUCIONAL</option><option>AGENTE OPERACIONES</option><option>ADMINISTRADOR VEHÍCULOS</option></select></label><div class="actions"><button type="button" class="secondary close">Cancelar</button><button class="primary">Guardar</button></div></form></div>
+<script src="app.js"></script>
+</body></html>
